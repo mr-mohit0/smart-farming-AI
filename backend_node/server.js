@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const { connectDB } = require('./config/database');
 const authRoutes = require('./routes/authRoutes');
 const aiRoutes = require('./routes/aiRoutes');
+const dashboardRoutes = require('./routes/dashboardRoutes');
 const path = require('path');
 
 const app = express();
@@ -23,6 +24,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.use('/api/auth', authRoutes);
 app.use('/api', aiRoutes);
+app.use('/api', dashboardRoutes);
 
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: 'Smart Farming AI Backend is running' });

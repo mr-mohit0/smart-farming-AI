@@ -6,6 +6,8 @@ import DiseaseForm from '../components/DiseaseForm';
 import ImageUpload from '../components/ImageUpload';
 import ResultCard from '../components/ResultCard';
 import Loader from '../components/Loader';
+import WeatherForecast from '../components/WeatherForecast';
+import CropMarketPrices from '../components/CropMarketPrices';
 import EducationalContent from '../components/EducationalContent';
 import Footer from '../components/Footer';
 
@@ -57,6 +59,12 @@ const Dashboard = () => {
             <ResultCard data={result} isStreaming={true} />
           </motion.div>
         )}
+
+        {/* Weather Forecast Dashboard */}
+        <WeatherForecast />
+
+        {/* Crop Market Prices */}
+        <CropMarketPrices />
 
         {/* Educational Content Section */}
         <EducationalContent />

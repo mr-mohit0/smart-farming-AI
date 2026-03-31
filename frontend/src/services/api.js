@@ -52,3 +52,32 @@ export const getWeather = async (city) => {
     return null;
   }
 };
+
+export const getWeatherForecast = async ({ city, lat, lon }) => {
+  try {
+    const params = new URLSearchParams();
+    if (city) params.append('city', city);
+    if (lat) params.append('lat', lat);
+    if (lon) params.append('lon', lon);
+
+    const response = await axios.get(
+      `${API_URL}/api/weather-forecast?${params.toString()}`,
+      { withCredentials: true }
+    );
+    return response.data;
+  } catch (error) {
+    throw error.response?.data?.message || error.message;
+  }
+};
+
+export const getCropPrices = async () => {
+  try {
+    const response = await axios.get(
+      `${API_URL}/api/crop-prices`,
+      { withCredentials: true }
+    );
+    return response.data;
+  } catch (error) {
+    throw error.response?.data?.message || error.message;
+  }
+};
