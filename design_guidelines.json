@@ -1,0 +1,95 @@
+{
+  "theme": "Light",
+  "archetype": "Organic & Earthy (Modified for Premium Agriculture)",
+  "colors": {
+    "primary": "#15803D",
+    "primary_hover": "#166534",
+    "accent_orange": "#EA580C",
+    "accent_orange_hover": "#C2410C",
+    "background_base": "#FAFAF9",
+    "surface_white": "#FFFFFF",
+    "text_main": "#1C1917",
+    "text_muted": "#57534E",
+    "border_light": "#E7E5E4",
+    "glass_bg": "rgba(255, 255, 255, 0.70)",
+    "glass_border": "rgba(255, 255, 255, 0.5)"
+  },
+  "typography": {
+    "fonts": {
+      "heading": "'Outfit', sans-serif",
+      "body": "'Plus Jakarta Sans', sans-serif"
+    },
+    "hierarchy": {
+      "h1": "text-4xl sm:text-5xl lg:text-6xl tracking-tight font-bold text-stone-900",
+      "h2": "text-2xl sm:text-3xl lg:text-4xl tracking-tight font-semibold text-stone-900",
+      "h3": "text-xl sm:text-2xl font-medium text-stone-800",
+      "body": "text-base leading-relaxed text-stone-600",
+      "small_label": "text-xs font-bold uppercase tracking-[0.15em] text-green-700"
+    }
+  },
+  "surfaces": {
+    "hero_overlay": "bg-black/30 backdrop-blur-[2px]",
+    "glass_card": "bg-white/70 backdrop-blur-xl backdrop-saturate-150 border border-white/50 shadow-[0_8px_32px_rgba(0,0,0,0.08)] rounded-2xl",
+    "solid_card": "bg-white border border-stone-200 shadow-sm rounded-2xl hover:shadow-md transition-shadow duration-300",
+    "input_field": "bg-stone-50 border border-stone-200 rounded-xl focus:border-green-700 focus:ring-2 focus:ring-green-700/20 px-4 py-3"
+  },
+  "layout_spacing": {
+    "container_padding": "px-4 sm:px-6 lg:px-8",
+    "section_spacing": "py-16 md:py-24",
+    "card_padding": "p-6 md:p-8",
+    "gap_standard": "gap-6 md:gap-8",
+    "bento_grid": "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+  },
+  "motion": {
+    "page_load": "Framer Motion: fade-up (y: 20, opacity: 0 -> y: 0, opacity: 1, duration: 0.5s)",
+    "stagger_children": "stagger 0.1s for list items/cards",
+    "hover_card": "y: -4px, shadow: md, duration: 0.2s ease-out",
+    "tap_button": "scale: 0.98"
+  },
+  "components": {
+    "buttons": {
+      "primary": "bg-green-700 text-white rounded-xl px-6 py-3 font-semibold hover:bg-green-800 transition-colors shadow-sm",
+      "secondary": "bg-white text-green-800 border border-green-700 rounded-xl px-6 py-3 font-semibold hover:bg-stone-50 transition-colors",
+      "accent": "bg-orange-600 text-white rounded-xl px-6 py-3 font-semibold hover:bg-orange-700 transition-colors shadow-sm"
+    },
+    "navbar": "fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-stone-200 transition-all",
+    "result_card": "Uses glass_card styling for premium feel over agricultural backgrounds, robust padding for mobile reading.",
+    "forms": "Large touch targets (mobile-first), rounded-xl, high contrast labels, prominent focus states"
+  },
+  "icons": {
+    "library": "lucide-react",
+    "usage": "stroke-width 2, sizes 20px (inline) to 32px (card headers). Color mapped to green-700 or orange-600."
+  },
+  "images": [
+    {
+      "category": "hero_background",
+      "url": "https://images.pexels.com/photos/36719188/pexels-photo-36719188.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=1080&w=1920",
+      "description": "Vibrant green rice field in daylight showcasing agricultural abundance. Use as the absolute background of the Hero section. MUST apply a bg-black/30 overlay or gradient so white text is readable."
+    },
+    {
+      "category": "about_section",
+      "url": "https://images.pexels.com/photos/4723058/pexels-photo-4723058.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=800&w=1200",
+      "description": "Back view of a woman farmer walking on a path in a lush Indian field. Use in About/Story section with a rounded-2xl border and subtle shadow."
+    },
+    {
+      "category": "features_background",
+      "url": "https://images.unsplash.com/photo-1568584952324-45e972c25fb4?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2OTV8MHwxfHNlYXJjaHwyfHxsdXNoJTIwZ3JlZW4lMjBjcm9wJTIwZmllbGR8ZW58MHx8fHwxNzc0OTU5NzU3fDA&ixlib=rb-4.1.0&q=85",
+      "description": "Macro photography of green plants. Good for a subtle textured background behind a feature grid (apply a bg-white/90 overlay to maintain readability of text on top)."
+    }
+  ],
+  "accessibility": {
+    "contrast": "Ensure all text on green or orange backgrounds is pure white (#FFFFFF).",
+    "focus": "All interactive elements must have visible focus rings (focus:ring-2 focus:ring-green-700/50 focus:outline-none).",
+    "testing": "All interactive and key informational elements MUST include data-testid attribute in kebab-case (e.g., data-testid='submit-crop-form')."
+  },
+  "instructions_to_main_agent": [
+    "Strictly adhere to the typography: Outfit for headings, Plus Jakarta Sans for body. Do not use Inter or generic defaults.",
+    "Implement the green + white + orange theme by using the base colors provided. Green is primary (#15803D), Orange is accent (#EA580C), White/Stone is the structural canvas.",
+    "For the requested glassmorphism effect, use the 'glass_card' surface styles (backdrop-blur-xl bg-white/70 border-white/50) over lush agricultural backgrounds.",
+    "Ensure the language toggle (Hindi/English) is prominently placed in the Navbar as requested.",
+    "Use Framer Motion to stagger the entrance of the AI Result Cards and features (bento grid layout).",
+    "Do not use generic gray borders; use tinted borders like border-stone-200 or border-white/50 for glass components.",
+    "Make forms mobile-friendly: inputs must have generous padding (p-3/4) to cater to farmers using phones.",
+    "Never use dummy image placeholders. Strictly use the provided image URLs in the images section."
+  ]
+}
