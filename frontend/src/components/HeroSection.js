@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Sprout, Volume2, Camera, Mic, ChevronDown, Zap, Shield, TrendingUp } from 'lucide-react';
+import { Sprout, Volume2, Camera, Mic, ChevronDown, Zap, Shield, TrendingUp, Check } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 
@@ -22,7 +22,12 @@ const HeroSection = () => {
       tryVoice: 'वॉइस डेमो आज़माएं',
       badge1: '24/7 उपलब्ध',
       badge2: 'हिंदी समर्थन',
-      badge3: 'मुफ्त परामर्श'
+      badge3: 'मुफ्त परामर्श',
+      askQuestion: 'अपना सवाल पूछें',
+      analyzing: 'विश्लेषण कर रहे हैं...',
+      recommendation: 'गेहूं की खेती की सिफारिश',
+      weatherGood: 'मौसम अनुकूल है',
+      soilPerfect: 'मिट्टी सही है'
     },
     english: {
       title: 'Smart Farming',
@@ -37,7 +42,12 @@ const HeroSection = () => {
       tryVoice: 'Try Voice Demo',
       badge1: '24/7 Available',
       badge2: 'Hindi Support',
-      badge3: 'Free Consultation'
+      badge3: 'Free Consultation',
+      askQuestion: 'Ask your question',
+      analyzing: 'Analyzing...',
+      recommendation: 'Wheat crop recommended',
+      weatherGood: 'Weather is favorable',
+      soilPerfect: 'Soil is perfect'
     }
   };
 
@@ -68,6 +78,12 @@ const HeroSection = () => {
     { icon: Zap, text: t.badge1, color: 'from-green-500 to-green-600' },
     { icon: Shield, text: t.badge2, color: 'from-blue-500 to-blue-600' },
     { icon: TrendingUp, text: t.badge3, color: 'from-orange-500 to-orange-600' }
+  ];
+
+  const results = [
+    { icon: Check, text: t.recommendation },
+    { icon: Check, text: t.weatherGood },
+    { icon: Check, text: t.soilPerfect }
   ];
 
   return (
@@ -195,7 +211,7 @@ const HeroSection = () => {
             </motion.div>
           </motion.div>
 
-          {/* Right Mockup Card with Floating Badges */}
+          {/* Right Mockup Card with Interactive Content */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
@@ -234,31 +250,71 @@ const HeroSection = () => {
               transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
               className="relative bg-white dark:bg-stone-800 rounded-3xl shadow-2xl p-8 border border-stone-200 dark:border-stone-700"
             >
-              {/* Card Header */}
-              <div className="flex items-center space-x-4 mb-6">
-                <div className="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-green-600 to-green-700 rounded-2xl shadow-md">
-                  <Sprout className="w-8 h-8 text-white" />
+              {/* Card Header with Input */}
+              <div className="space-y-4 mb-6">
+                <div className="flex items-center space-x-4">
+                  <div className="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-green-600 to-green-700 rounded-2xl shadow-md">
+                    <Sprout className="w-8 h-8 text-white" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-lg font-semibold text-stone-900 dark:text-white">
+                      {language === 'hindi' ? 'AI सहायक' : 'AI Assistant'}
+                    </h3>
+                    <p className="text-xs text-stone-500 dark:text-stone-400">
+                      {language === 'hindi' ? 'तत्काल सिफारिशें' : 'Instant recommendations'}
+                    </p>
+                  </div>
                 </div>
-                <div className="flex-1 space-y-2">
-                  <div className="h-4 bg-stone-200 dark:bg-stone-700 rounded-full w-3/4 animate-pulse" />
-                  <div className="h-3 bg-stone-100 dark:bg-stone-600 rounded-full w-1/2 animate-pulse" />
-                </div>
+                
+                {/* Interactive Input */}
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 1.2 }}
+                  className="relative"
+                >
+                  <input
+                    type="text"
+                    placeholder={t.askQuestion}
+                    className="w-full px-4 py-3 bg-stone-50 dark:bg-stone-900 border border-stone-200 dark:border-stone-700 rounded-xl text-sm text-stone-700 dark:text-stone-300 placeholder-stone-400 focus:outline-none focus:border-green-600"
+                    readOnly
+                  />
+                  <motion.div
+                    animate={{ opacity: [0.5, 1, 0.5] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 w-2 h-2 bg-green-600 rounded-full"
+                  />
+                </motion.div>
               </div>
 
-              {/* Card Content */}
-              <div className="space-y-4">
-                {[1, 2, 3].map((_, index) => (
+              {/* Results Content */}
+              <div className="space-y-3">
+                <div className="flex items-center space-x-2 mb-3">
                   <motion.div
-                    key={index}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 1 + index * 0.15, duration: 0.5 }}
-                    className="flex items-center space-x-3"
-                  >
-                    <div className="w-2 h-2 bg-green-600 dark:bg-green-500 rounded-full flex-shrink-0" />
-                    <div className="flex-1 h-3 bg-stone-100 dark:bg-stone-700 rounded-full" style={{ width: `${90 - index * 10}%` }} />
-                  </motion.div>
-                ))}
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
+                    className="w-4 h-4 border-2 border-green-600 border-t-transparent rounded-full"
+                  />
+                  <span className="text-xs text-stone-500 dark:text-stone-400">{t.analyzing}</span>
+                </div>
+
+                {results.map((result, index) => {
+                  const Icon = result.icon;
+                  return (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 1.5 + index * 0.2, duration: 0.5 }}
+                      className="flex items-center space-x-3 p-3 bg-green-50 dark:bg-green-900/20 rounded-xl border-l-4 border-green-600"
+                    >
+                      <div className="flex-shrink-0 w-6 h-6 bg-green-600 rounded-full flex items-center justify-center">
+                        <Icon className="w-4 h-4 text-white" />
+                      </div>
+                      <p className="text-sm font-medium text-stone-700 dark:text-stone-300">{result.text}</p>
+                    </motion.div>
+                  );
+                })}
               </div>
 
               {/* Decorative elements */}
@@ -266,11 +322,11 @@ const HeroSection = () => {
               <div className="absolute -bottom-4 -left-4 w-20 h-20 bg-green-500 rounded-full opacity-20 blur-2xl" />
             </motion.div>
 
-            {/* Additional Info Card */}
+            {/* Success Rate Card */}
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 1.5, duration: 0.5 }}
+              transition={{ delay: 2, duration: 0.5 }}
               className="absolute -bottom-6 -right-6 bg-white dark:bg-stone-800 rounded-2xl p-4 shadow-xl border border-stone-200 dark:border-stone-700"
             >
               <div className="flex items-center space-x-3">
