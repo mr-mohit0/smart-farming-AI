@@ -22,15 +22,17 @@ Build a full-stack web application "Smart Farming AI Assistant" using React.js (
 3. Dashboard with Crop Form, Disease Form, Image Upload, Result Card, History
 4. Result Card with ChatGPT-like streaming/typing animation and Voice Output (TTS)
 5. Educational Content Section with 4 tabs (Soil Types, Soil Erosion, Pesticides, Crop Diseases) with images
-6. Full Hindi/English bilingual support across all components
-7. Dark mode toggle with proper styling on all components
-8. JWT authentication (register, login, logout)
-9. AI crop recommendations via Gemini API (with fallback mechanism)
-10. AI disease detection via text symptoms (Gemini API)
-11. AI image analysis for plant disease detection (Gemini Vision)
-12. OpenWeather API integration for location-based weather data
-13. About section, Features page, Health Resources page, Footer
-14. Back to Top button
+6. **Weather Forecast Dashboard** - 5-day forecast, current weather, auto-detect + manual city search, farming tips
+7. **Crop Market Prices** - 12 Indian crops from major mandis, filter (All/Gainers/Losers), sort, refresh
+8. Full Hindi/English bilingual support across all components
+9. Dark mode toggle with proper styling on all components
+10. JWT authentication (register, login, logout)
+11. AI crop recommendations via Gemini API (with fallback mechanism)
+12. AI disease detection via text symptoms (Gemini API)
+13. AI image analysis for plant disease detection (Gemini Vision)
+14. OpenWeather API integration for location-based weather data
+15. About section, Features page, Health Resources page, Footer
+16. Back to Top button
 
 ## API Endpoints
 - `GET /api/health` - Health check
@@ -40,16 +42,19 @@ Build a full-stack web application "Smart Farming AI Assistant" using React.js (
 - `GET /api/auth/me` - Get current user
 - `POST /api/ask-ai` - AI crop/disease recommendations
 - `POST /api/analyze-image` - Image-based disease detection
+- `GET /api/weather-forecast` - 5-day weather forecast with tips (params: city or lat+lon)
+- `GET /api/crop-prices` - Crop market prices (MOCKED static data with random variation)
 
 ## Known Limitations
 - Gemini API free tier quota may be exceeded; fallback mechanism handles this gracefully
-- User's API key: quota resets daily
+- Crop market prices use MOCKED static dataset (not real-time mandi API)
 
 ## Testing Status (March 31, 2026)
-- Backend: 100% (13/13 tests passed)
-- Frontend: 100% (all features working)
-- Test report: /app/test_reports/iteration_2.json
+- Iteration 2: Backend 100% (13/13), Frontend 100%
+- Iteration 3: Backend 100% (11/11), Frontend 100% (Weather + Prices features)
+- Test reports: /app/test_reports/iteration_2.json, /app/test_reports/iteration_3.json
 
 ## Future/Backlog
 - Real ML-based plant disease detection model
+- Real-time mandi price API integration
 - Mobile app version
