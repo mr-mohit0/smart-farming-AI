@@ -101,22 +101,22 @@ const ImageUpload = () => {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-white border border-stone-200 shadow-sm rounded-2xl p-6 md:p-8"
+      className="bg-white dark:bg-stone-800 border border-stone-200 dark:border-stone-700 shadow-sm rounded-2xl p-6 md:p-8"
       data-testid="image-upload"
     >
       <div className="flex items-center space-x-3 mb-6">
-        <div className="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center">
-          <ImageIcon className="w-6 h-6 text-blue-600" />
+        <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900/50 rounded-xl flex items-center justify-center">
+          <ImageIcon className="w-6 h-6 text-blue-600 dark:text-blue-400" />
         </div>
-        <h3 className="text-xl sm:text-2xl font-medium text-stone-800">{t.title}</h3>
+        <h3 className="text-xl sm:text-2xl font-medium text-stone-800 dark:text-white">{t.title}</h3>
       </div>
 
       {!uploadedImage ? (
         <div
           className={`relative border-2 border-dashed rounded-2xl p-8 text-center transition-all ${
             dragActive
-              ? 'border-green-700 bg-green-50'
-              : 'border-stone-300 hover:border-green-700 hover:bg-stone-50'
+              ? 'border-green-700 bg-green-50 dark:bg-green-900/20'
+              : 'border-stone-300 dark:border-stone-600 hover:border-green-700 hover:bg-stone-50 dark:hover:bg-stone-700/50'
           }`}
           onDragEnter={handleDrag}
           onDragLeave={handleDrag}
@@ -131,8 +131,8 @@ const ImageUpload = () => {
             className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
             data-testid="file-input"
           />
-          <Upload className="w-12 h-12 mx-auto mb-4 text-stone-400" />
-          <p className="text-base leading-relaxed text-stone-600">{t.dragDrop}</p>
+          <Upload className="w-12 h-12 mx-auto mb-4 text-stone-400 dark:text-stone-500" />
+          <p className="text-base leading-relaxed text-stone-600 dark:text-stone-300">{t.dragDrop}</p>
         </div>
       ) : (
         <div className="space-y-4">

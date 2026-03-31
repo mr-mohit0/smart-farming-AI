@@ -6,6 +6,7 @@ import DiseaseForm from '../components/DiseaseForm';
 import ImageUpload from '../components/ImageUpload';
 import ResultCard from '../components/ResultCard';
 import Loader from '../components/Loader';
+import EducationalContent from '../components/EducationalContent';
 import Footer from '../components/Footer';
 
 const Dashboard = () => {
@@ -25,17 +26,17 @@ const Dashboard = () => {
   const t = translations[language];
 
   return (
-    <div className="min-h-screen bg-stone-50 pt-16">
+    <div className="min-h-screen bg-stone-50 dark:bg-stone-900 pt-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-12"
         >
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl tracking-tight font-bold text-stone-900">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl tracking-tight font-bold text-stone-900 dark:text-white">
             {t.title}
           </h1>
-          <p className="text-base leading-relaxed text-stone-600 mt-4 max-w-2xl mx-auto">
+          <p className="text-base leading-relaxed text-stone-600 dark:text-stone-300 mt-4 max-w-2xl mx-auto">
             {t.subtitle}
           </p>
         </motion.div>
@@ -53,9 +54,12 @@ const Dashboard = () => {
 
         {!loading && result && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-            <ResultCard data={result} />
+            <ResultCard data={result} isStreaming={true} />
           </motion.div>
         )}
+
+        {/* Educational Content Section */}
+        <EducationalContent />
       </div>
       <Footer />
     </div>

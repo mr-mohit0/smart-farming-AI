@@ -80,7 +80,7 @@ async function askAI(req, res) {
     
     const prompt = buildPrompt(type, { soil, season, symptoms, location }, weather);
     
-    const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
+    const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
     const result = await model.generateContent(prompt);
     const response = await result.response;
     const text = response.text();
@@ -107,13 +107,15 @@ async function askAI(req, res) {
   } catch (error) {
     console.error('AI Error:', error);
     
+    const weather = await getWeatherData(req.body.location).catch(() => null);
+    
     const fallback = req.body.type === 'crop'
       ? { crop: 'गेहूं', reason: 'सामान्य सिफारिश', tips: 'उचित सिंचाई और उर्वरक का उपयोग करें', expectedYield: 'मध्यम' }
       : { disease: 'अज्ञात', cause: 'अधिक जानकारी की आवश्यकता', solution: 'स्थानीय कृषि विशेषज्ञ से परामर्श करें', severity: 'अज्ञात' };
     
     res.json({
       success: true,
-      data: fallback,
+      data: { ...fallback, weather },
       note: 'Using fallback due to AI error'
     });
   }
@@ -135,7 +137,7 @@ async function analyzeImage(req, res) {
     const imageData = fs.readFileSync(filePath);
     const base64Image = imageData.toString('base64');
     
-    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+    const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
     
     const prompt = `इस पौधे की पत्ती की छवि का सावधानीपूर्वक विश्लेषण करें। यदि कोई बीमारी मौजूद है तो उसकी पहचान करें।\n\nनिम्नलिखित JSON प्रारूप में उत्तर प्रदान करें:\n{\n  "disease": "बीमारी का नाम (या 'स्वस्थ' यदि कोई बीमारी नहीं)",\n  "cause": "बीमारी का कारण",\n  "solution": "उपचार और रोकथाम के उपाय",\n  "severity": "गंभीरता का स्तर (हल्का/मध्यम/गंभीर)",\n  "confidence": "विश्लेषण में विश्वास का स्तर (कम/मध्यम/उच्च)"\n}\n\nकेवल JSON में उत्तर दें।`;
     

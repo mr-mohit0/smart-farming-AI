@@ -76,23 +76,23 @@ const CropForm = () => {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-white border border-stone-200 shadow-sm rounded-2xl p-6 md:p-8"
+      className="bg-white dark:bg-stone-800 border border-stone-200 dark:border-stone-700 shadow-sm rounded-2xl p-6 md:p-8"
       data-testid="crop-form"
     >
       <div className="flex items-center space-x-3 mb-6">
         <div className="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center">
           <Sprout className="w-6 h-6 text-green-700" />
         </div>
-        <h3 className="text-xl sm:text-2xl font-medium text-stone-800">{t.title}</h3>
+        <h3 className="text-xl sm:text-2xl font-medium text-stone-800 dark:text-white">{t.title}</h3>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
-          <label className="block text-sm font-semibold text-stone-700 mb-2">{t.soil} *</label>
+          <label className="block text-sm font-semibold text-stone-700 dark:text-stone-300 mb-2">{t.soil} *</label>
           <select
             value={formData.soil}
             onChange={(e) => setFormData({ ...formData, soil: e.target.value })}
-            className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 focus:outline-none focus:border-green-700 focus:ring-2 focus:ring-green-700/20 transition-all"
+            className="w-full bg-stone-50 dark:bg-stone-700 border border-stone-200 dark:border-stone-600 rounded-xl px-4 py-3 focus:outline-none focus:border-green-700 focus:ring-2 focus:ring-green-700/20 transition-all text-stone-900 dark:text-white"
             data-testid="soil-select"
           >
             <option value="">{t.selectSoil}</option>
@@ -103,11 +103,11 @@ const CropForm = () => {
         </div>
 
         <div>
-          <label className="block text-sm font-semibold text-stone-700 mb-2">{t.season} *</label>
+          <label className="block text-sm font-semibold text-stone-700 dark:text-stone-300 mb-2">{t.season} *</label>
           <select
             value={formData.season}
             onChange={(e) => setFormData({ ...formData, season: e.target.value })}
-            className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 focus:outline-none focus:border-green-700 focus:ring-2 focus:ring-green-700/20 transition-all"
+            className="w-full bg-stone-50 dark:bg-stone-700 border border-stone-200 dark:border-stone-600 rounded-xl px-4 py-3 focus:outline-none focus:border-green-700 focus:ring-2 focus:ring-green-700/20 transition-all text-stone-900 dark:text-white"
             data-testid="season-select"
           >
             <option value="">{t.selectSeason}</option>
@@ -118,7 +118,7 @@ const CropForm = () => {
         </div>
 
         <div>
-          <label className="block text-sm font-semibold text-stone-700 mb-2">
+          <label className="block text-sm font-semibold text-stone-700 dark:text-stone-300 mb-2">
             <MapPin className="w-4 h-4 inline mr-1" />
             {t.location}
           </label>
@@ -127,7 +127,7 @@ const CropForm = () => {
             value={formData.location}
             onChange={(e) => setFormData({ ...formData, location: e.target.value })}
             placeholder={t.enterLocation}
-            className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 focus:outline-none focus:border-green-700 focus:ring-2 focus:ring-green-700/20 transition-all"
+            className="w-full bg-stone-50 dark:bg-stone-700 border border-stone-200 dark:border-stone-600 rounded-xl px-4 py-3 focus:outline-none focus:border-green-700 focus:ring-2 focus:ring-green-700/20 transition-all text-stone-900 dark:text-white placeholder:text-stone-400 dark:placeholder:text-stone-500"
             data-testid="location-input"
           />
         </div>
