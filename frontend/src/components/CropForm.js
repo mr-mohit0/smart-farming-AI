@@ -63,7 +63,7 @@ const CropForm = () => {
 
     try {
       const response = await askAI('crop', formData);
-      setResult(response.data);
+      setResult({ ...response.data, _isRealtime: response.isRealtime !== false });
       addToHistory({ type: 'crop', data: formData, timestamp: new Date().toISOString() });
     } catch (error) {
       toast.error(error.toString());

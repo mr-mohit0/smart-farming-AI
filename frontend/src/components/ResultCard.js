@@ -4,7 +4,7 @@ import { Volume2, Copy, Sprout, AlertTriangle, Pill, CloudRain, Loader2 } from '
 import { useApp } from '../context/AppContext';
 import { toast } from 'sonner';
 
-const ResultCard = ({ data, isStreaming = false }) => {
+const ResultCard = ({ data, isStreaming = false, isRealtime = true }) => {
   const { language } = useApp();
   const [displayedText, setDisplayedText] = useState({});
   const [isTyping, setIsTyping] = useState(false);
@@ -151,6 +151,16 @@ const ResultCard = ({ data, isStreaming = false }) => {
           <h3 className="text-xl sm:text-2xl font-medium text-stone-800 dark:text-white">
             {displayedText.crop ? t.crop : t.disease} {language === 'hindi' ? 'परिणाम' : 'Results'}
           </h3>
+          {isRealtime && (
+            <span className="px-2 py-0.5 text-xs font-bold bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-400 rounded-full" data-testid="realtime-badge">
+              {language === 'hindi' ? 'AI लाइव' : 'AI Live'}
+            </span>
+          )}
+          {!isRealtime && (
+            <span className="px-2 py-0.5 text-xs font-bold bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-400 rounded-full" data-testid="fallback-badge">
+              {language === 'hindi' ? 'सामान्य' : 'General'}
+            </span>
+          )}
           {isTyping && (
             <motion.div
               animate={{ opacity: [0.5, 1, 0.5] }}

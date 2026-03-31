@@ -56,7 +56,7 @@ const Dashboard = () => {
 
         {!loading && result && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-            <ResultCard data={result} isStreaming={true} />
+            <ResultCard data={result} isStreaming={true} isRealtime={result?._isRealtime !== false} />
           </motion.div>
         )}
 

@@ -49,7 +49,7 @@ const DiseaseForm = () => {
 
     try {
       const response = await askAI('disease', { symptoms });
-      setResult(response.data);
+      setResult({ ...response.data, _isRealtime: response.isRealtime !== false });
       addToHistory({ type: 'disease', data: { symptoms }, timestamp: new Date().toISOString() });
     } catch (error) {
       toast.error(error.toString());
