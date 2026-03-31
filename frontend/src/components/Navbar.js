@@ -1,13 +1,24 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Sprout } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { useAuth } from '../context/AuthContext';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const { language, toggleLanguage } = useApp();
   const { user, logout } = useAuth();
+  const location = useLocation();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const translations = {
     hindi: {
@@ -28,7 +39,7 @@ const Navbar = () => {
       features: 'Features',
       health: 'Health Resources',
       login: 'Login',
-      signup: 'Signup',
+      signup: 'Sign Up',
       logout: 'Logout',
       dashboard: 'Dashboard'
     }
@@ -36,59 +47,86 @@ const Navbar = () => {
 
   const t = translations[language];
 
+  const navLinks = [
+    { path: '/', label: t.home, testId: 'nav-home' },
+    { path: '/features', label: t.features, testId: 'nav-features' },
+    { path: '/health-resources', label: t.health, testId: 'nav-health' }
+  ];
+
+  const isActive = (path) => location.pathname === path;
+
   return (
-    <nav className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-stone-200 transition-all">
-      <div className="max-width px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          <div className="flex items-center space-x-3">
-            <div className="flex items-center justify-center w-10 h-10 bg-green-700 rounded-xl">
-              <Sprout className="w-6 h-6 text-white" />
+    <nav
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? 'bg-white/95 backdrop-blur-md shadow-sm'
+          : 'bg-white'
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-20">
+          {/* Logo Section */}
+          <Link
+            to="/"
+            className="flex items-center space-x-3 group"
+            data-testid="navbar-logo"
+          >
+            <div className="flex items-center justify-center w-14 h-14 bg-gradient-to-br from-green-600 to-green-700 rounded-2xl shadow-md group-hover:shadow-lg transition-all duration-300 group-hover:scale-105">
+              <Sprout className="w-7 h-7 text-white" strokeWidth={2.5} />
             </div>
-            <div>
-              <Link to="/" className="text-xl font-bold text-stone-900" data-testid="navbar-title">
+            <div className="hidden sm:block">
+              <h1 className="text-xl font-bold text-stone-900 tracking-tight" data-testid="navbar-title">
                 {t.title}
-              </Link>
-              <p className="text-xs text-stone-600 hidden sm:block">{t.tagline}</p>
+              </h1>
+              <p className="text-xs text-stone-500 font-medium">{t.tagline}</p>
             </div>
+          </Link>
+
+          {/* Desktop Navigation */}
+          <div className="hidden lg:flex items-center space-x-1">
+            {navLinks.map((link) => (
+              <Link
+                key={link.path}
+                to={link.path}
+                data-testid={link.testId}
+                className={`relative px-4 py-2 text-sm font-medium transition-all duration-300 rounded-lg group ${
+                  isActive(link.path)
+                    ? 'text-green-700'
+                    : 'text-stone-600 hover:text-green-700'
+                }`}
+              >
+                {link.label}
+                <span
+                  className={`absolute bottom-1 left-1/2 -translate-x-1/2 h-0.5 bg-green-700 transition-all duration-300 ${
+                    isActive(link.path) ? 'w-8' : 'w-0 group-hover:w-8'
+                  }`}
+                />
+              </Link>
+            ))}
           </div>
 
-          <div className="hidden md:flex items-center space-x-6">
-            <Link
-              to="/"
-              className="text-stone-700 hover:text-green-700 transition-colors font-medium"
-              data-testid="nav-home"
-            >
-              {t.home}
-            </Link>
-            <Link
-              to="/features"
-              className="text-stone-700 hover:text-green-700 transition-colors font-medium"
-              data-testid="nav-features"
-            >
-              {t.features}
-            </Link>
-            <Link
-              to="/health-resources"
-              className="text-stone-700 hover:text-green-700 transition-colors font-medium"
-              data-testid="nav-health"
-            >
-              {t.health}
-            </Link>
-
+          {/* Right Actions */}
+          <div className="hidden lg:flex items-center space-x-3">
+            {/* Language Toggle */}
             <button
               onClick={toggleLanguage}
-              className="px-3 py-1.5 text-sm bg-stone-100 hover:bg-stone-200 rounded-lg transition-colors font-medium"
+              className="px-4 py-2 text-sm font-semibold text-stone-700 bg-stone-100 hover:bg-stone-200 rounded-lg transition-all duration-300 hover:scale-105"
               data-testid="language-toggle"
             >
-              {language === 'hindi' ? 'English' : 'हिन्दी'}
+              {language === 'hindi' ? 'English' : 'हिंदी'}
             </button>
 
             {user && user !== false ? (
               <>
-                <span className="text-sm text-stone-600">{user.name || user.email}</span>
+                <Link
+                  to="/dashboard"
+                  className="px-4 py-2 text-sm font-semibold text-stone-700 hover:text-green-700 transition-colors"
+                >
+                  {user.name || user.email}
+                </Link>
                 <button
                   onClick={logout}
-                  className="px-4 py-2 bg-orange-600 text-white rounded-xl hover:bg-orange-700 transition-colors font-semibold"
+                  className="px-5 py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 rounded-lg transition-all duration-300 hover:scale-105 shadow-md hover:shadow-lg"
                   data-testid="logout-button"
                 >
                   {t.logout}
@@ -98,14 +136,14 @@ const Navbar = () => {
               <>
                 <Link
                   to="/login"
-                  className="px-4 py-2 text-green-700 border border-green-700 rounded-xl hover:bg-stone-50 transition-colors font-semibold"
+                  className="px-5 py-2.5 text-sm font-semibold text-stone-700 hover:text-green-700 transition-all duration-300"
                   data-testid="login-button"
                 >
                   {t.login}
                 </Link>
                 <Link
                   to="/signup"
-                  className="px-4 py-2 bg-green-700 text-white rounded-xl hover:bg-green-800 transition-colors font-semibold shadow-sm"
+                  className="px-5 py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 rounded-lg transition-all duration-300 hover:scale-105 shadow-md hover:shadow-lg"
                   data-testid="signup-button"
                 >
                   {t.signup}
@@ -114,82 +152,99 @@ const Navbar = () => {
             )}
           </div>
 
+          {/* Mobile Menu Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden p-2 rounded-lg hover:bg-stone-100 transition-colors"
+            className="lg:hidden p-2 rounded-lg hover:bg-stone-100 transition-colors"
             data-testid="mobile-menu-toggle"
+            aria-label="Toggle menu"
           >
-            {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {isOpen ? (
+              <X className="w-6 h-6 text-stone-700" />
+            ) : (
+              <Menu className="w-6 h-6 text-stone-700" />
+            )}
           </button>
         </div>
       </div>
 
-      {isOpen && (
-        <div className="md:hidden bg-white border-t border-stone-200" data-testid="mobile-menu">
-          <div className="px-4 py-4 space-y-3">
-            <Link
-              to="/"
-              onClick={() => setIsOpen(false)}
-              className="block text-stone-700 hover:text-green-700 py-2 font-medium"
-            >
-              {t.home}
-            </Link>
-            <Link
-              to="/features"
-              onClick={() => setIsOpen(false)}
-              className="block text-stone-700 hover:text-green-700 py-2 font-medium"
-            >
-              {t.features}
-            </Link>
-            <Link
-              to="/health-resources"
-              onClick={() => setIsOpen(false)}
-              className="block text-stone-700 hover:text-green-700 py-2 font-medium"
-            >
-              {t.health}
-            </Link>
+      {/* Mobile Menu */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3 }}
+            className="lg:hidden bg-white border-t border-stone-200 overflow-hidden"
+            data-testid="mobile-menu"
+          >
+            <div className="px-4 py-6 space-y-4">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  onClick={() => setIsOpen(false)}
+                  className={`block px-4 py-3 text-sm font-medium rounded-lg transition-all duration-300 ${
+                    isActive(link.path)
+                      ? 'bg-green-50 text-green-700'
+                      : 'text-stone-700 hover:bg-stone-50'
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              ))}
 
-            <button
-              onClick={toggleLanguage}
-              className="w-full text-left px-3 py-2 bg-stone-100 rounded-lg font-medium"
-            >
-              {language === 'hindi' ? 'Switch to English' : 'हिन्दी में बदलें'}
-            </button>
-
-            {user && user !== false ? (
-              <>
-                <div className="py-2 text-sm text-stone-600">{user.name || user.email}</div>
+              <div className="pt-4 border-t border-stone-200 space-y-3">
                 <button
-                  onClick={() => {
-                    logout();
-                    setIsOpen(false);
-                  }}
-                  className="w-full px-4 py-2 bg-orange-600 text-white rounded-xl hover:bg-orange-700 transition-colors font-semibold"
+                  onClick={toggleLanguage}
+                  className="w-full px-4 py-3 text-sm font-semibold text-stone-700 bg-stone-100 hover:bg-stone-200 rounded-lg transition-colors text-left"
                 >
-                  {t.logout}
+                  {language === 'hindi' ? 'Switch to English' : 'हिन्दी में बदलें'}
                 </button>
-              </>
-            ) : (
-              <>
-                <Link
-                  to="/login"
-                  onClick={() => setIsOpen(false)}
-                  className="block px-4 py-2 text-center text-green-700 border border-green-700 rounded-xl hover:bg-stone-50 transition-colors font-semibold"
-                >
-                  {t.login}
-                </Link>
-                <Link
-                  to="/signup"
-                  onClick={() => setIsOpen(false)}
-                  className="block px-4 py-2 text-center bg-green-700 text-white rounded-xl hover:bg-green-800 transition-colors font-semibold"
-                >
-                  {t.signup}
-                </Link>
-              </>
-            )}
-          </div>
-        </div>
-      )}
+
+                {user && user !== false ? (
+                  <>
+                    <Link
+                      to="/dashboard"
+                      onClick={() => setIsOpen(false)}
+                      className="block px-4 py-3 text-sm font-medium text-stone-700 bg-stone-50 rounded-lg"
+                    >
+                      {user.name || user.email}
+                    </Link>
+                    <button
+                      onClick={() => {
+                        logout();
+                        setIsOpen(false);
+                      }}
+                      className="w-full px-4 py-3 text-sm font-semibold text-white bg-gradient-to-r from-orange-500 to-orange-600 rounded-lg transition-all"
+                    >
+                      {t.logout}
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <Link
+                      to="/login"
+                      onClick={() => setIsOpen(false)}
+                      className="block px-4 py-3 text-sm font-semibold text-center text-stone-700 border border-stone-300 rounded-lg transition-all hover:bg-stone-50"
+                    >
+                      {t.login}
+                    </Link>
+                    <Link
+                      to="/signup"
+                      onClick={() => setIsOpen(false)}
+                      className="block px-4 py-3 text-sm font-semibold text-center text-white bg-gradient-to-r from-green-600 to-green-700 rounded-lg transition-all"
+                    >
+                      {t.signup}
+                    </Link>
+                  </>
+                )}
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 };
