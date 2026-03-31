@@ -4,6 +4,7 @@ const AppContext = createContext(null);
 
 export function AppProvider({ children }) {
   const [language, setLanguage] = useState('hindi');
+  const [darkMode, setDarkMode] = useState(false);
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -19,7 +20,23 @@ export function AppProvider({ children }) {
         console.error('Error loading history:', e);
       }
     }
+
+    // Check for saved dark mode preference
+    const savedDarkMode = localStorage.getItem('darkMode');
+    if (savedDarkMode) {
+      setDarkMode(savedDarkMode === 'true');
+    }
   }, []);
+
+  useEffect(() => {
+    // Apply dark mode class to document
+    if (darkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+    localStorage.setItem('darkMode', darkMode.toString());
+  }, [darkMode]);
 
   const addToHistory = (query) => {
     const newHistory = [query, ...history].slice(0, 5);
@@ -31,11 +48,17 @@ export function AppProvider({ children }) {
     setLanguage((prev) => (prev === 'hindi' ? 'english' : 'hindi'));
   };
 
+  const toggleDarkMode = () => {
+    setDarkMode((prev) => !prev);
+  };
+
   return (
     <AppContext.Provider
       value={{
         language,
         toggleLanguage,
+        darkMode,
+        toggleDarkMode,
         result,
         setResult,
         loading,

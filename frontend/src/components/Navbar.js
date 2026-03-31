@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Sprout } from 'lucide-react';
+import { Menu, X, Sprout, Moon, Sun } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { useAuth } from '../context/AuthContext';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -8,7 +8,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const { language, toggleLanguage } = useApp();
+  const { language, toggleLanguage, darkMode, toggleDarkMode } = useApp();
   const { user, logout } = useAuth();
   const location = useLocation();
 
@@ -59,8 +59,8 @@ const Navbar = () => {
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? 'bg-white/95 backdrop-blur-md shadow-sm'
-          : 'bg-white'
+          ? 'bg-white/95 dark:bg-stone-900/95 backdrop-blur-md shadow-sm'
+          : 'bg-white dark:bg-stone-900'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -75,10 +75,10 @@ const Navbar = () => {
               <Sprout className="w-7 h-7 text-white" strokeWidth={2.5} />
             </div>
             <div className="hidden sm:block">
-              <h1 className="text-xl font-bold text-stone-900 tracking-tight" data-testid="navbar-title">
+              <h1 className="text-xl font-bold text-stone-900 dark:text-white tracking-tight" data-testid="navbar-title">
                 {t.title}
               </h1>
-              <p className="text-xs text-stone-500 font-medium">{t.tagline}</p>
+              <p className="text-xs text-stone-500 dark:text-stone-400 font-medium">{t.tagline}</p>
             </div>
           </Link>
 
@@ -91,8 +91,8 @@ const Navbar = () => {
                 data-testid={link.testId}
                 className={`relative px-4 py-2 text-sm font-medium transition-all duration-300 rounded-lg group ${
                   isActive(link.path)
-                    ? 'text-green-700'
-                    : 'text-stone-600 hover:text-green-700'
+                    ? 'text-green-700 dark:text-green-500'
+                    : 'text-stone-600 dark:text-stone-300 hover:text-green-700 dark:hover:text-green-500'
                 }`}
               >
                 {link.label}
@@ -107,10 +107,22 @@ const Navbar = () => {
 
           {/* Right Actions */}
           <div className="hidden lg:flex items-center space-x-3">
+            {/* Dark Mode Toggle */}
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={toggleDarkMode}
+              className="p-2.5 text-stone-700 dark:text-stone-300 bg-stone-100 dark:bg-stone-800 hover:bg-stone-200 dark:hover:bg-stone-700 rounded-lg transition-all duration-300"
+              data-testid="dark-mode-toggle"
+              aria-label="Toggle dark mode"
+            >
+              {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+            </motion.button>
+
             {/* Language Toggle */}
             <button
               onClick={toggleLanguage}
-              className="px-4 py-2 text-sm font-semibold text-stone-700 bg-stone-100 hover:bg-stone-200 rounded-lg transition-all duration-300 hover:scale-105"
+              className="px-4 py-2 text-sm font-semibold text-stone-700 dark:text-stone-300 bg-stone-100 dark:bg-stone-800 hover:bg-stone-200 dark:hover:bg-stone-700 rounded-lg transition-all duration-300 hover:scale-105"
               data-testid="language-toggle"
             >
               {language === 'hindi' ? 'English' : 'हिंदी'}

@@ -59,11 +59,10 @@ const HeroSection = () => {
   ];
 
   return (
-    <section className="relative min-h-screen bg-gradient-to-br from-stone-50 via-stone-100 to-green-50 pt-20 overflow-hidden">
-      {/* Background Decorative Elements */}
+    <section className="relative min-h-screen bg-gradient-to-br from-stone-50 via-stone-100 to-green-50 dark:from-stone-900 dark:via-stone-800 dark:to-stone-900 pt-20 overflow-hidden">\n      {/* Background Decorative Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 right-10 w-96 h-96 bg-green-200/20 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 left-10 w-96 h-96 bg-orange-200/20 rounded-full blur-3xl" />
+        <div className="absolute top-20 right-10 w-96 h-96 bg-green-200/20 dark:bg-green-900/20 rounded-full blur-3xl" />
+        <div className="absolute bottom-20 left-10 w-96 h-96 bg-orange-200/20 dark:bg-orange-900/20 rounded-full blur-3xl" />
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
@@ -84,12 +83,12 @@ const HeroSection = () => {
                 className="flex items-start space-x-4"
               >
                 <h1
-                  className="text-5xl sm:text-6xl lg:text-7xl font-bold text-stone-900 leading-tight"
+                  className="text-5xl sm:text-6xl lg:text-7xl font-bold text-stone-900 dark:text-white leading-tight"
                   data-testid="hero-title"
                 >
                   {t.title}
                   <br />
-                  <span className="text-green-700">{t.titleSuffix}</span>
+                  <span className="text-green-700 dark:text-green-500">{t.titleSuffix}</span>
                 </h1>
                 <motion.div
                   initial={{ scale: 0, rotate: -180 }}
@@ -108,7 +107,7 @@ const HeroSection = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4, duration: 0.6 }}
-                className="text-lg sm:text-xl text-stone-600 leading-relaxed max-w-xl"
+                className="text-lg sm:text-xl text-stone-600 dark:text-stone-300 leading-relaxed max-w-xl"
                 data-testid="hero-subtitle"
               >
                 {t.subtitle}
@@ -131,10 +130,10 @@ const HeroSection = () => {
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.7 + index * 0.1, duration: 0.4 }}
                     whileHover={{ scale: 1.05, y: -2 }}
-                    className="flex items-center space-x-3 px-5 py-3 bg-white rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 border border-stone-200"
+                    className="flex items-center space-x-3 px-5 py-3 bg-white dark:bg-stone-800 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 border border-stone-200 dark:border-stone-700"
                   >
-                    <Icon className="w-5 h-5 text-green-700 flex-shrink-0" />
-                    <span className="text-sm font-medium text-stone-700">{feature.label}</span>
+                    <Icon className="w-5 h-5 text-green-700 dark:text-green-500 flex-shrink-0" />
+                    <span className="text-sm font-medium text-stone-700 dark:text-stone-300">{feature.label}</span>
                   </motion.div>
                 );
               })}
@@ -181,7 +180,7 @@ const HeroSection = () => {
             <motion.div
               animate={{ y: [0, -10, 0] }}
               transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-              className="relative bg-white rounded-3xl shadow-2xl p-8 border border-stone-200"
+              className="relative bg-white dark:bg-stone-800 rounded-3xl shadow-2xl p-8 border border-stone-200 dark:border-stone-700"
             >
               {/* Card Header */}
               <div className="flex items-center space-x-4 mb-6">
@@ -189,8 +188,8 @@ const HeroSection = () => {
                   <Sprout className="w-8 h-8 text-white" />
                 </div>
                 <div className="flex-1 space-y-2">
-                  <div className="h-4 bg-stone-200 rounded-full w-3/4 animate-pulse" />
-                  <div className="h-3 bg-stone-100 rounded-full w-1/2 animate-pulse" />
+                  <div className="h-4 bg-stone-200 dark:bg-stone-700 rounded-full w-3/4 animate-pulse" />
+                  <div className="h-3 bg-stone-100 dark:bg-stone-600 rounded-full w-1/2 animate-pulse" />
                 </div>
               </div>
 
@@ -204,8 +203,8 @@ const HeroSection = () => {
                     transition={{ delay: 1 + index * 0.15, duration: 0.5 }}
                     className="flex items-center space-x-3"
                   >
-                    <div className="w-2 h-2 bg-green-600 rounded-full flex-shrink-0" />
-                    <div className="flex-1 h-3 bg-stone-100 rounded-full" style={{ width: `${90 - index * 10}%` }} />
+                    <div className="w-2 h-2 bg-green-600 dark:bg-green-500 rounded-full flex-shrink-0" />
+                    <div className="flex-1 h-3 bg-stone-100 dark:bg-stone-700 rounded-full" style={{ width: `${90 - index * 10}%` }} />
                   </motion.div>
                 ))}
               </div>
@@ -230,7 +229,7 @@ const HeroSection = () => {
           transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
           className="flex flex-col items-center space-y-2"
         >
-          <ChevronDown className="w-6 h-6 text-stone-400" />
+          <ChevronDown className="w-6 h-6 text-stone-400 dark:text-stone-500" />
         </motion.div>
       </motion.div>
     </section>

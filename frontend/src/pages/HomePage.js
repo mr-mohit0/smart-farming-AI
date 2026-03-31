@@ -1,5 +1,6 @@
 import React from 'react';
 import HeroSection from '../components/HeroSection';
+import Statistics from '../components/Statistics';
 import About from '../components/About';
 import CoreValues from '../components/CoreValues';
 import ContactUs from '../components/ContactUs';
@@ -10,6 +11,7 @@ const HomePage = () => {
   return (
     <div>
       <HeroSection />
+      <Statistics />
       <About />
       <CoreValues />
       <ContactUs />

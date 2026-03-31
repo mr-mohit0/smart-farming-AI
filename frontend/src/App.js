@@ -4,6 +4,7 @@ import { AuthProvider } from './context/AuthContext';
 import { AppProvider } from './context/AppContext';
 import { Toaster } from './components/ui/sonner';
 import Navbar from './components/Navbar';
+import BackToTop from './components/BackToTop';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
@@ -17,7 +18,7 @@ function App() {
     <Router>
       <AuthProvider>
         <AppProvider>
-          <div className="App">
+          <div className="App bg-white dark:bg-stone-900 transition-colors duration-300">
             <Navbar />
             <Routes>
               <Route path="/" element={<HomePage />} />
@@ -27,6 +28,7 @@ function App() {
               <Route path="/features" element={<FeaturesPage />} />
               <Route path="/health-resources" element={<HealthResourcesPage />} />
             </Routes>
+            <BackToTop />
             <Toaster position="top-right" richColors />
           </div>
         </AppProvider>
