@@ -10,11 +10,15 @@ const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 8001;
-
+// ✅ CORS FIX
 app.use(cors({
-  origin: process.env.FRONTEND_URL,
-  credentials: true
+  origin: "*",
 }));
+
+// ✅ ADD THIS ROUTE
+app.get("/", (req, res) => {
+  res.send("Backend is running 🚀");
+});
 
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
