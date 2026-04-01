@@ -5,8 +5,8 @@ let db = null;
 
 async function connectDB() {
   try {
-    const client = await MongoClient.connect(process.env.MONGO_URL);
-    db = client.db(process.env.DB_NAME);
+    const client = await MongoClient.connect(process.env.MONGO_URI);
+db = client.db("smartfarming");
     console.log('✅ Connected to MongoDB');
     
     await db.collection('users').createIndex({ email: 1 }, { unique: true });
